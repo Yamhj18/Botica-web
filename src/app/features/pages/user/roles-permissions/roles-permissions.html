@@ -1,0 +1,118 @@
+<div class="p-6">
+
+  <!-- Header -->
+  <div class="flex items-center gap-3 mb-6">
+    <div class="bg-purple-100 p-2.5 rounded-xl">
+      <i class="pi pi-lock text-purple-600 text-xl"></i>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold text-gray-800">Roles y Permisos</h2>
+      <p class="text-xs text-gray-400 mt-0.5">Vista de accesos por rol del sistema</p>
+    </div>
+  </div>
+
+  <!-- Cards de roles -->
+  <div class="grid grid-cols-3 gap-4 mb-8">
+    @for (rol of roles; track rol.key) {
+    <div class="rounded-xl border border-gray-200 p-4 flex items-center gap-3 bg-white shadow-sm">
+      <div class="p-2.5 rounded-lg {{ rol.class }} bg-opacity-60">
+        <i class="pi {{ rol.icon }} text-lg"></i>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-800 text-sm">{{ rol.label }}</p>
+        <p class="text-xs text-gray-400">
+          @if (rol.key === 'administrador') { Acceso total al sistema }
+          @if (rol.key === 'vendedor') { Ventas y clientes }
+          @if (rol.key === 'quimico') { Inventario y reportes }
+        </p>
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- Tabla -->
+  <div class="rounded-xl overflow-hidden shadow-sm border border-gray-200">
+    <p-table [value]="permisos" [tableStyle]="{ 'min-width': '42rem' }" rowGroupMode="rowspan" groupRowsBy="modulo">
+
+      <ng-template #header>
+        <tr>
+          <th class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3 w-36">
+            <div class="flex items-center gap-1.5">
+              <i class="pi pi-th-large text-gray-400 text-xs"></i> Módulo
+            </div>
+          </th>
+          <th class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">
+            <div class="flex items-center gap-1.5">
+              <i class="pi pi-list text-gray-400 text-xs"></i> Acción
+            </div>
+          </th>
+          <th class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3 text-center w-36">
+            <div class="flex items-center justify-center gap-1.5">
+              <i class="pi pi-shield text-purple-400 text-xs"></i> Administrador
+            </div>
+          </th>
+          <th class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3 text-center w-32">
+            <div class="flex items-center justify-center gap-1.5">
+              <i class="pi pi-shopping-cart text-blue-400 text-xs"></i> Vendedor
+            </div>
+          </th>
+          <th class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3 text-center w-28">
+            <div class="flex items-center justify-center gap-1.5">
+              <i class="pi pi-flask text-green-400 text-xs"></i> Químico
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-permiso let-rowIndex="rowIndex" let-rowspan="rowspan">
+        <tr class="hover:bg-gray-50 transition-colors">
+
+          <!-- Módulo con rowspan -->
+          @if (rowspan) {
+          <td [attr.rowspan]="rowspan" class="px-4 py-3 align-middle border-r border-gray-100">
+            <div class="flex items-center gap-2">
+              <i class="pi {{ permiso.icono }} text-gray-400 text-sm"></i>
+              <span class="text-sm font-semibold text-gray-700">{{ permiso.modulo }}</span>
+            </div>
+          </td>
+          }
+
+          <td class="px-4 py-3 text-sm text-gray-500">{{ permiso.accion }}</td>
+
+          <!-- Administrador — siempre ✅ -->
+          <td class="px-4 py-3 text-center">
+            <i class="pi pi-check-circle text-purple-500 text-lg"></i>
+          </td>
+
+          <!-- Vendedor -->
+          <td class="px-4 py-3 text-center">
+            @if (permiso.vendedor) {
+            <i class="pi pi-check-circle text-green-500 text-lg"></i>
+            } @else {
+            <i class="pi pi-times-circle text-gray-300 text-lg"></i>
+            }
+          </td>
+
+          <!-- Químico -->
+          <td class="px-4 py-3 text-center">
+            @if (permiso.quimico) {
+            <i class="pi pi-check-circle text-green-500 text-lg"></i>
+            } @else {
+            <i class="pi pi-times-circle text-gray-300 text-lg"></i>
+            }
+          </td>
+
+        </tr>
+      </ng-template>
+
+    </p-table>
+  </div>
+
+  <!-- Nota informativa -->
+  <div class="mt-4 flex items-center gap-2 text-xs text-gray-400">
+    <i class="pi pi-info-circle"></i>
+    <span>Los permisos son fijos según el rol asignado. Solo el administrador puede gestionar usuarios y
+      configuración.</span>
+  </div>
+
+</div>

@@ -1,0 +1,9 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+// PrimeNG ajusta el canvas al contenedor
+::ng-deep canvas {
+    width: 100% !important;
+}
