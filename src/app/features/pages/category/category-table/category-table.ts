@@ -1,36 +1,31 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { Component, input, output } from '@angular/core';
+import { TitleCasePipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-
-export interface Categoria {
-  id: number | string;
-  name: string;
-  estado: 'activo' | 'inactivo';
-}
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-category-table',
   standalone: true,
   imports: [
-    CommonModule,
+    TitleCasePipe,
     TableModule,
-    TooltipModule
+    TooltipModule,
+    TagModule
   ],
   templateUrl: './category-table.html',
   styleUrl: './category-table.css',
 })
 export class CategoryTable {
-  @Input() categorias: Categoria[] = [];
-  @Input() total: number = 0;
-  @Input() loading: boolean = false;
-  @Input() error: string | null = null;
-  @Output() crearCategoria = new EventEmitter<void>();
-  @Output() onEdit = new EventEmitter<Categoria>();
-  @Output() onToggleStatus = new EventEmitter<Categoria>();
-  @Output() onDelete = new EventEmitter<number | string>();
+  categorias = input<any[]>([]);
+  total = input<number>(0);
+  loading = input<boolean>(false);
+  error = input<string>('');
 
-  exportarExcel(): void {
-  }
+  crearCategoria = output<void>();
+  onEdit = output<any>();
+  onToggleStatus = output<any>();
+  onDelete = output<any>();
+  onExportExcel = output<void>();
+  onExportPdf = output<void>();
 }

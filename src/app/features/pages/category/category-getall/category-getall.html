@@ -1,28 +1,23 @@
-<div class="p-6 grid grid-cols-1 lg:grid-cols-10 gap-6 items-start">
+<div class="p-6 flex flex-col gap-6">
 
-    <div class="flex flex-col gap-6 w-full min-w-0 lg:col-span-6">
-        <app-category-sidebar [busquedaValue]="busqueda()" [estadoValue]="estadoFiltro()"
-            [totalCategorias]="totalCategorias()" [totalActivas]="totalActivas()" [totalInactivas]="totalInactivas()"
-            (busquedaChange)="onBusquedaChange($event)" (estadoChange)="onEstadoChange($event)"
-            (crearCategoria)="onCrearCategoria()" />
+    <app-category-sidebar [busquedaValue]="busqueda()" [estadoValue]="estadoFiltro()"
+        [totalCategorias]="totalCategorias()" [totalActivas]="totalActivas()" [totalInactivas]="totalInactivas()"
+        (busquedaChange)="onBusquedaChange($event)" (estadoChange)="onEstadoChange($event)"
+        (crearCategoria)="onCrearCategoria()" />
 
-        <app-category-table class="w-full min-w-0" [categorias]="filtrados()" [total]="totalCategorias()"
-            [loading]="loading()" [error]="error()" (crearCategoria)="onCrearCategoria()" (onEdit)="onEditar($event)"
-            (onToggleStatus)="onToggleStatus($event)" (onDelete)="onEliminar($event)" />
-    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-10 gap-6 items-stretch">
 
-    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm w-full flex flex-col lg:col-span-4">
-        <div class="mb-4">
-            <h3 class="text-sm font-bold text-gray-700 flex items-center gap-1.5 uppercase tracking-wider">
-                <i class="pi pi-chart-line text-pink-500"></i>
-                Estadísticas de Categorías
-            </h3>
-            <p class="text-[11px] text-gray-400 mt-0.5">Visualización de productos por categoría y su estado.</p>
+        <div class="col-span-6">
+            <app-category-table class="w-full" [categorias]="filtrados()" [total]="totalCategorias()"
+                [loading]="loading()" [error]="error()" (crearCategoria)="onCrearCategoria()"
+                (onEdit)="onEditar($event)" (onToggleStatus)="onToggleStatus($event)" (onDelete)="onEliminar($event)" />
         </div>
 
-        <div class="h-80 w-full flex items-center justify-center">
-            <app-category-manager class="w-full min-w-0" />
+        <div class="col-span-4 flex">
+            <app-category-graphic class="flex-1" [categorias]="categorias()"
+                [productos]="productos()"></app-category-graphic>
         </div>
+
     </div>
 
 </div>

@@ -29,4 +29,5 @@ export class CategorySidebar {
 
   busquedaChange = output<string>();
   estadoChange = output<string>();
+  crearCategoria = output<void>();
 }

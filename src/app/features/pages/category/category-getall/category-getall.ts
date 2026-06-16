@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Api } from '../../../../api/api';
-import { categoryGetall } from '../../../../api/functions';
+import { categoryGetall, productGetall } from '../../../../api/functions';
 import { DialogModule } from 'primeng/dialog';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
@@ -9,11 +9,10 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CategorySidebar } from '../category-sidebar/category-sidebar';
 import { CategoryTable } from '../category-table/category-table';
 import { MessageService } from 'primeng/api';
-import { CategoryManager } from '../category-manager/category-manager';
+import { CategoryGraphic } from '../ui/category-graphic/category-graphic';
 
 @Component({
   selector: 'app-category-getall',
-  standalone: true,
   imports: [
     CommonModule,
     DialogModule,
@@ -22,7 +21,7 @@ import { CategoryManager } from '../category-manager/category-manager';
     ProgressSpinnerModule,
     CategorySidebar,
     CategoryTable,
-    CategoryManager
+    CategoryGraphic
   ],
   templateUrl: './category-getall.html',
   styleUrl: './category-getall.css'
@@ -32,6 +31,7 @@ export class CategoryGetall implements OnInit {
   private readonly messageService = inject(MessageService);
 
   categorias = signal<any[]>([]);
+  productos = signal<any[]>([]);
   loading = signal<boolean>(true);
   error = signal<string>('');
   busqueda = signal<string>('');
@@ -60,18 +60,30 @@ export class CategoryGetall implements OnInit {
   private initialization(): void {
     this.loading.set(true);
     this.error.set('');
-    this.api.invoke$Response(categoryGetall).then((raw: any) => {
-      const data = typeof raw.body === 'string' ? JSON.parse(raw.body) : raw.body;
-      if (data.type !== 'success') {
-        this.error.set(data.listMessage[0] ?? 'Error al cargar categorías.');
-        return;
-      }
-      this.categorias.set(data.listCategories ?? []);
-    }).catch(() => {
-      this.error.set('Error al cargar categorías.');
-    }).finally(() => {
-      this.loading.set(false);
-    });
+
+    Promise.all([
+      this.api.invoke$Response(categoryGetall),
+      this.api.invoke$Response(productGetall)
+    ])
+      .then(([resCat, resProd]: any[]) => {
+        const dataCat = typeof resCat.body === 'string' ? JSON.parse(resCat.body) : resCat.body;
+        if (dataCat.type === 'success') {
+          this.categorias.set(dataCat.listCategories ?? []);
+        } else {
+          this.error.set(dataCat.listMessage?.[0] ?? 'Error al cargar categorías.');
+        }
+
+        const dataProd = typeof resProd.body === 'string' ? JSON.parse(resProd.body) : resProd.body;
+        if (dataProd.type === 'success') {
+          this.productos.set(dataProd.listProducts ?? []);
+        }
+      })
+      .catch(() => {
+        this.error.set('Error al cargar los datos del servidor.');
+      })
+      .finally(() => {
+        this.loading.set(false);
+      });
   }
 
   getSeverity(status: string): 'success' | 'danger' {
@@ -87,8 +99,7 @@ export class CategoryGetall implements OnInit {
     this.initialization();
   }
 
-  onEditar(categoria: any): void {
-  }
+  onEditar(categoria: any): void { }
 
   onToggleStatus(categoria: any): void {
     const nuevoEstado = categoria.status?.toLowerCase() === 'activo' ? 'inactivo' : 'activo';

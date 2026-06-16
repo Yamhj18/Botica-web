@@ -7,7 +7,8 @@ import { ProductDetails } from '../product-details/product-details';
 import { Dialog } from "primeng/dialog";
 import { ProductInsert } from "../product-insert/product-insert";
 import { ProductKpi } from '../product-kpi/product-kpi';
-import { ProductGraphic } from '../ui/product-graphic/product-graphic';
+import { ProductGrowth } from '../ui/product-growth/product-growth';
+import { ProductCategory } from '../ui/product-category/product-category';
 
 interface FiltroContador {
   name: string;
@@ -24,7 +25,8 @@ interface FiltroContador {
     ProductKpi,
     Dialog,
     ProductInsert,
-    ProductGraphic
+    ProductGrowth,
+    ProductCategory
   ],
   templateUrl: './product-getall.html',
   styleUrl: './product-getall.css',

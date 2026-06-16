@@ -15,8 +15,13 @@
 
 </div>
 
-<div class="p-6">
-  <app-product-graphic [productos]="productos()" />
+<div class="p-6 flex gap-6 items-stretch">
+  <div class="flex-1">
+    <app-product-growth [productos]="productos()" />
+  </div>
+  <div class="flex-1">
+    <app-product-category [productos]="productos()" />
+  </div>
 </div>
 
 <p-dialog [visible]="showCreate()" (visibleChange)="showCreate.set($event)" [modal]="true" [draggable]="false"
