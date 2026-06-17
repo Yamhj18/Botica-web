@@ -7,5 +7,5 @@ import com.epiis.apirfbvc.entity.EntityCategory;
 
 @Repository
 public interface RepositoryCategory extends JpaRepository<EntityCategory, String>{
-
+	boolean existsByName(String name);
 }

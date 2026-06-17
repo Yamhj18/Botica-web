@@ -7,5 +7,7 @@ import com.epiis.apirfbvc.entity.EntityProduct;
 
 @Repository
 public interface RepositoryProduct extends JpaRepository<EntityProduct, String> {
-
+	long countByCategory_IdCategory(String idCategory);
+	
+	long countByLaboratory_IdLaboratory(String idLaboratory); 
 }

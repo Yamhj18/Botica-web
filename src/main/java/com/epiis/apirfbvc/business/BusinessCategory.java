@@ -1,22 +1,60 @@
 package com.epiis.apirfbvc.business;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.epiis.apirfbvc.dto.request.RequestCategoryInsert;
 import com.epiis.apirfbvc.dto.response.ResponseCategoryGetAll;
+import com.epiis.apirfbvc.dto.response.ResponseCategoryInsert;
 import com.epiis.apirfbvc.entity.EntityCategory;
 import com.epiis.apirfbvc.repository.RepositoryCategory;
+import com.epiis.apirfbvc.repository.RepositoryProduct;
 
 @Service
 public class BusinessCategory {
 	private final RepositoryCategory repositoryCategory;
+	private final RepositoryProduct repositoryProduct;
 
-	public BusinessCategory(RepositoryCategory repositoryCategory) {
+	public BusinessCategory(RepositoryCategory repositoryCategory, RepositoryProduct repositoryProduct) {
 		this.repositoryCategory = repositoryCategory;
+		this.repositoryProduct = repositoryProduct;
 	}
+	
+	public ResponseCategoryInsert insert(RequestCategoryInsert request) throws IOException {
+		ResponseCategoryInsert response = new ResponseCategoryInsert();
+		
+		EntityCategory entityCategory = new EntityCategory();
+		
+		if(repositoryCategory.existsByName(request.getName())) {
+			response.listMessage.add("El nombre ya existe en el sistema.");
+			return response;
+		}
+		
+		entityCategory.setImage(request.getImage() == null || request.getImage().trim().isEmpty()
+			        ? null
+			        : request.getImage()
+			);
+		entityCategory.setIdCategory(UUID.randomUUID().toString());
+		entityCategory.setName(request.getName());
+		entityCategory.setStatus("activo");
+		
+		entityCategory.setCreatedAt(new java.sql.Date(new Date().getTime()));
+		entityCategory.setUpdatedAt(entityCategory.getCreatedAt());
+
+		repositoryCategory.save(entityCategory);
+		
+		response.success();
+		response.listMessage.add("Registro realizado correctamente.");
+		
+		return response;
+	}
+	
 	
 	public ResponseCategoryGetAll getAll() {
 		ResponseCategoryGetAll response = new ResponseCategoryGetAll();
@@ -30,6 +68,9 @@ public class BusinessCategory {
 			data.put("image", item.getImage());
 			data.put("name", item.getName());
 			data.put("status", item.getStatus());
+			data.put("totalProducts", String.valueOf(
+			    repositoryProduct.countByCategory_IdCategory(item.getIdCategory())
+			));
 	        data.put("createdAt", item.getCreatedAt().toString());
 			
 			response.getListCategories().add(data);

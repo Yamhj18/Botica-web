@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.epiis.apirfbvc.entity.EntityLaboratory;
 
 @Repository
-public interface RepositoryLaboratory extends JpaRepository<EntityLaboratory, String>{}
+public interface RepositoryLaboratory extends JpaRepository<EntityLaboratory, String>{
+	boolean existsByName(String name);
+}
