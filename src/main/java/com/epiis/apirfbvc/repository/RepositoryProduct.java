@@ -7,7 +7,11 @@ import com.epiis.apirfbvc.entity.EntityProduct;
 
 @Repository
 public interface RepositoryProduct extends JpaRepository<EntityProduct, String> {
+<<<<<<< HEAD
 	long countByCategory_IdCategory(String idCategory);
 	
 	long countByLaboratory_IdLaboratory(String idLaboratory); 
+=======
+
+>>>>>>> botica-web/dev-backend
 }

@@ -123,7 +123,10 @@ INSERT INTO tuser VALUES
 ('e847c211-c918-4b72-be77-d4a9f3ebac51', 'avatar-f.png', '09432175', 'Elena', 'Flores Choque', 'elena.flores@bvc.com', '$2a$12$X2wN7oW3K7Iz5tP0uO9cMs6tI1dE2f3h4i5j6k7l8m9n0o1p2q3r4', '961524376', 'vendedor', 'inactivo', NOW(), NOW()),
 ('3d9e8c7b-6a5f-4d3c-2b1a-0e9d8c7b6a5f', 'avatar.png', '25841397', 'Ricardo', 'Palomino Ortiz', 'ricardo.palomino@bvc.com', '$2a$12$W1vM6nW2J6Hy4sO9tN8bLr5sH0cD1e2g3h4i5j6k7l8m9n0o1p2q3', '932145678', 'quimico', 'activo', NOW(), NOW()),
 ('fa93b216-cdd2-4b21-8154-1b709a071afc', 'avatar-f.png', '47586912', 'Gabriela', 'Mamani Luna', 'gabriela.mamani@bvc.com', '$2a$12$V0uL5mV1I5Gx3rN8sM7aKq4rH9bC0d1f2g3h4i5j6k7l8m9n0o1p2', '993847561', 'quimico', 'activo', NOW(), NOW());
+<<<<<<< HEAD
 
+=======
+>>>>>>> botica-web/dev-backend
 -- 2. tcategory
 INSERT INTO tcategory VALUES
 ('5ad2ab8f-c672-48d1-a579-31e0b6cd8cb7', NULL, 'Analgésicos', 'activo', NOW(), NOW()),
@@ -150,6 +153,7 @@ INSERT INTO tlaboratory VALUES
 
 -- 5. tproduct
 INSERT INTO tproduct VALUES
+<<<<<<< HEAD
 ('57c10dc3-3e41-4bcc-906a-dbae1ca43e46', 'Paracetamol 500mg', 'Tabletas analgésicas y antipiréticas', '7501234567891', 'paracetamol.png', 0.50, false, 10, 'activo', '5ad2ab8f-c672-48d1-a579-31e0b6cd8cb7', 'b1c23d4e-5f6a-7b8c-9d0e-1f2a3b4c5d6e', '2026-06-01 08:15:00', '2026-06-01 08:15:00'),
 ('89ae8ff2-6971-4196-b508-dcf5141820fd', 'Amoxicilina 500mg', 'Cápsulas antibióticas de amplio espectro', '7509876543211', NULL, 1.20, true, 8, 'activo', '12268e2d-a223-4754-9264-c5781a547d08', 'c2d34e5f-6a7b-8c9d-0e1f-2a3b4c5d6e7f', '2026-06-03 09:30:00', '2026-06-03 09:30:00'),
 ('7bec925e-c6ff-4059-a18b-a8b88738e24d', 'Vitamina C 1000mg', 'Tabletas efervescentes de vitamina C', '7512345678901', NULL, 0.80, false, 15, 'inactivo', '91051daf-e3bc-43e3-a6c7-bde48ede5553', 'd34e5f6a-7b8c-9d0e-1f2a-3b4c5d6e7f8a', '2026-06-07 10:45:00', '2026-06-05 10:45:00'),
@@ -161,6 +165,18 @@ INSERT INTO tproduct VALUES
 ('d4e5f6a7-b8c9-4012-cdef-0123456789ab', 'Salbutamol Inhalador', 'Inhalador broncodilatador para el alivio del asma', '7604567890123', NULL, 18.90, true, 5, 'activo', '91051daf-e3bc-43e3-a6c7-bde48ede5553', 'e45f6a7b-8c9d-0e1f-2a3b-4c5d6e7f8a9b', '2026-06-18 09:15:00', '2026-06-18 09:15:00'),
 ('e5f6a7b8-c9d0-4123-def0-123456789abc', 'Metformina 850mg', 'Tabletas para el control de la diabetes tipo 2', '7605678901234', NULL, 0.65, false, 30, 'activo', '2cfba2df-86ac-43bf-8f08-1b25d439fc33', 'f56a7b8c-9d0e-1f2a-3b4c-5d6e7f8a9b0c', '2026-06-20 10:00:00', '2026-06-20 10:00:00');
 
+=======
+('57c10dc3-3e41-4bcc-906a-dbae1ca43e46', 'Paracetamol 500mg', 'Tabletas analgésicas y antipiréticas', '7501234567891', 'paracetamol.png', 0.50, false, 10, 'activo', '5ad2ab8f-c672-48d1-a579-31e0b6cd8cb7', 'b1c23d4e-5f6a-7b8c-9d0e-1f2a3b4c5d6e', NOW(), NOW()),
+('89ae8ff2-6971-4196-b508-dcf5141820fd', 'Amoxicilina 500mg', 'Cápsulas antibióticas de amplio espectro', '7509876543211', null, 1.20, true, 8, 'activo', '12268e2d-a223-4754-9264-c5781a547d08', 'c2d34e5f-6a7b-8c9d-0e1f-2a3b4c5d6e7f', NOW(), NOW()),
+('7bec925e-c6ff-4059-a18b-a8b88738e24d', 'Vitamina C 1000mg', 'Tabletas efervescentes de vitamina C', '7512345678901', null, 0.80, false, 15, 'inactivo', '91051daf-e3bc-43e3-a6c7-bde48ede5553', 'd34e5f6a-7b8c-9d0e-1f2a-3b4c5d6e7f8a', NOW(), NOW()),
+('28fdef5c-734d-4b17-949e-991e09488c7a', 'Ibuprofeno 400mg', 'Tabletas antiinflamatorias y analgésicas', '7534567890121', null, 0.70, false, 10, 'activo', 'dc4bba06-75a7-4a25-b33e-f6c30c49b8f4', 'e45f6a7b-8c9d-0e1f-2a3b-4c5d6e7f8a9b', NOW(), NOW()),
+('1069e606-393a-4b90-acad-f20565152890', 'Clotrimazol Crema', 'Crema antifúngica para uso tópico', '7598765432101', null, 8.50, false, 5, 'activo', '2cfba2df-86ac-43bf-8f08-1b25d439fc33', 'f56a7b8c-9d0e-1f2a-3b4c-5d6e7f8a9b0c', NOW(), NOW()),
+('a1b2c3d4-e5f6-4789-9abc-def012345678', 'Loratadina 10mg', 'Tabletas antihistamínicas para alergias', '7601234567890', null, 0.90, false, 12, 'activo', '5ad2ab8f-c672-48d1-a579-31e0b6cd8cb7', 'b1c23d4e-5f6a-7b8c-9d0e-1f2a3b4c5d6e', NOW(), NOW()),
+('b2c3d4e5-f6a7-4890-abcd-ef0123456789', 'Omeprazol 20mg', 'Cápsulas para el tratamiento de acidez estomacal', '7602345678901', null, 1.50, false, 20, 'activo', '12268e2d-a223-4754-9264-c5781a547d08', 'c2d34e5f-6a7b-8c9d-0e1f-2a3b4c5d6e7f', NOW(), NOW()),
+('c3d4e5f6-a7b8-4901-bcde-f0123456789a', 'Diclofenaco 50mg', 'Tabletas antiinflamatorias para dolor muscular y articular', '7603456789012', null, 0.75, false, 10, 'activo', 'dc4bba06-75a7-4a25-b33e-f6c30c49b8f4', 'd34e5f6a-7b8c-9d0e-1f2a-3b4c5d6e7f8a', NOW(), NOW()),
+('d4e5f6a7-b8c9-4012-cdef-0123456789ab', 'Salbutamol Inhalador', 'Inhalador broncodilatador para el alivio del asma', '7604567890123', null, 18.90, true, 5, 'activo', '91051daf-e3bc-43e3-a6c7-bde48ede5553', 'e45f6a7b-8c9d-0e1f-2a3b-4c5d6e7f8a9b', NOW(), NOW()),
+('e5f6a7b8-c9d0-4123-def0-123456789abc', 'Metformina 850mg', 'Tabletas para el control de la diabetes tipo 2', '7605678901234', null, 0.65, false, 30, 'activo', '2cfba2df-86ac-43bf-8f08-1b25d439fc33', 'f56a7b8c-9d0e-1f2a-3b4c-5d6e7f8a9b0c', NOW(), NOW());
+>>>>>>> botica-web/dev-backend
 -- 6. tlot
 INSERT INTO tlot VALUES
 ('a8e2cf6b-f651-4f98-a7af-d3fb12822f04', 'LOT-001', '2026-06-16', 0.25, 200, '57c10dc3-3e41-4bcc-906a-dbae1ca43e46', '8919bd47-ec65-4977-bd88-8abf1e3fb592', NOW(), NOW()),
@@ -181,4 +197,8 @@ INSERT INTO tinventory VALUES
 select * from tproduct;
 select * from tuser;
 select * from tcategory;
+<<<<<<< HEAD
 select * from tlaboratory;
+=======
+select * from tlaboratory;
+>>>>>>> botica-web/dev-backend

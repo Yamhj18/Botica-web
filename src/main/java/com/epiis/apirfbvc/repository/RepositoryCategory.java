@@ -7,5 +7,9 @@ import com.epiis.apirfbvc.entity.EntityCategory;
 
 @Repository
 public interface RepositoryCategory extends JpaRepository<EntityCategory, String>{
+<<<<<<< HEAD
 	boolean existsByName(String name);
+=======
+
+>>>>>>> botica-web/dev-backend
 }

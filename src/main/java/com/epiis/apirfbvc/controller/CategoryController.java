@@ -1,20 +1,29 @@
 package com.epiis.apirfbvc.controller;
 
+<<<<<<< HEAD
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+=======
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+>>>>>>> botica-web/dev-backend
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epiis.apirfbvc.business.BusinessCategory;
+<<<<<<< HEAD
 import com.epiis.apirfbvc.dto.request.RequestCategoryInsert;
 import com.epiis.apirfbvc.dto.response.ResponseCategoryGetAll;
 import com.epiis.apirfbvc.dto.response.ResponseCategoryInsert;
 
 import jakarta.validation.Valid;
+=======
+import com.epiis.apirfbvc.dto.response.ResponseCategoryGetAll;
+>>>>>>> botica-web/dev-backend
 
 @RestController
 @RequestMapping(path = "categories")
@@ -25,6 +34,7 @@ public class CategoryController {
 		this.businessCategory = businessCategory;
 	}
 	
+<<<<<<< HEAD
 	@PostMapping(path = "insert", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<ResponseCategoryInsert> actionInsert(@Valid @ModelAttribute RequestCategoryInsert request, BindingResult bindingResult) {
 		try {
@@ -50,6 +60,8 @@ public class CategoryController {
 		}
 	}
 	
+=======
+>>>>>>> botica-web/dev-backend
 	@GetMapping(path = "getall")
 	public ResponseEntity<ResponseCategoryGetAll> listCategories(){
 		return ResponseEntity.ok(businessCategory.getAll());

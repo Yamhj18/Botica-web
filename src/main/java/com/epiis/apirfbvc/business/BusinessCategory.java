@@ -1,5 +1,6 @@
 package com.epiis.apirfbvc.business;
 
+<<<<<<< HEAD
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,10 +16,22 @@ import com.epiis.apirfbvc.dto.response.ResponseCategoryInsert;
 import com.epiis.apirfbvc.entity.EntityCategory;
 import com.epiis.apirfbvc.repository.RepositoryCategory;
 import com.epiis.apirfbvc.repository.RepositoryProduct;
+=======
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import com.epiis.apirfbvc.dto.response.ResponseCategoryGetAll;
+import com.epiis.apirfbvc.entity.EntityCategory;
+import com.epiis.apirfbvc.repository.RepositoryCategory;
+>>>>>>> botica-web/dev-backend
 
 @Service
 public class BusinessCategory {
 	private final RepositoryCategory repositoryCategory;
+<<<<<<< HEAD
 	private final RepositoryProduct repositoryProduct;
 
 	public BusinessCategory(RepositoryCategory repositoryCategory, RepositoryProduct repositoryProduct) {
@@ -56,6 +69,13 @@ public class BusinessCategory {
 	}
 	
 	
+=======
+
+	public BusinessCategory(RepositoryCategory repositoryCategory) {
+		this.repositoryCategory = repositoryCategory;
+	}
+	
+>>>>>>> botica-web/dev-backend
 	public ResponseCategoryGetAll getAll() {
 		ResponseCategoryGetAll response = new ResponseCategoryGetAll();
 		
@@ -68,9 +88,12 @@ public class BusinessCategory {
 			data.put("image", item.getImage());
 			data.put("name", item.getName());
 			data.put("status", item.getStatus());
+<<<<<<< HEAD
 			data.put("totalProducts", String.valueOf(
 			    repositoryProduct.countByCategory_IdCategory(item.getIdCategory())
 			));
+=======
+>>>>>>> botica-web/dev-backend
 	        data.put("createdAt", item.getCreatedAt().toString());
 			
 			response.getListCategories().add(data);
