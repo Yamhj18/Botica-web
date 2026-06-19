@@ -20,7 +20,7 @@ public class AuthController {
 		this.businessAuth = businessAuth;
 	}
 	
-    @PostMapping("/login")
+    @PostMapping(path = "login")
     public ResponseEntity<ResponseLogin> login(@Valid @RequestBody RequestLogin request) {
         ResponseLogin response = businessAuth.login(request);
         return ResponseEntity.ok(response);

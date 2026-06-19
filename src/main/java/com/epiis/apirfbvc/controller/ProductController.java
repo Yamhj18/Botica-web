@@ -50,7 +50,7 @@ public class ProductController {
 		}
 	}
 
-	@GetMapping("/getall")
+	@GetMapping(path = "getall")
     public ResponseEntity<ResponseProductGetAll> listProduct() {
         return ResponseEntity.ok(businessProduct.getAll());
     }
