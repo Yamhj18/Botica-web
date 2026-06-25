@@ -19,7 +19,7 @@
 
 <p-dialog [visible]="showInsertDialog()" (visibleChange)="showInsertDialog.set($event)" [modal]="true"
   [draggable]="false" [resizable]="false" [style]="{ width: '52rem' }" [breakpoints]="{ '768px': '95vw' }"
-  [dismissableMask]="true" styleClass="!rounded-2xl !p-0 overflow-hidden" (onHide)="insertUserComp.resetForm()">
+  [dismissableMask]="false" styleClass="!rounded-2xl !p-0 overflow-hidden" (onHide)="insertUserComp.resetForm()">
 
   <ng-template #header>
     <div class="flex items-center gap-4 py-1">

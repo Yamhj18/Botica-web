@@ -1,7 +1,7 @@
 import { Component, inject, Input, input, output } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { ConfirmationService } from 'primeng/api'; // Necesario para el modal
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-users-table',
