@@ -18,6 +18,7 @@ import { CurrentStock } from './features/pages/inventory/current-stock/current-s
 import { Income } from './features/pages/inventory/income/income';
 import { Movements } from './features/pages/inventory/movements/movements';
 import { LotGetall } from './features/pages/lot/lot-getall/lot-getall';
+import { PurchaseGetall } from './features/pages/purchases/purchase-getall/purchase-getall';
 
 const authGuard: CanActivateFn = () => {
   const router = inject(Router);
@@ -57,6 +58,14 @@ export const routes: Routes = [
           { path: 'lots', component: LotGetall },
           { path: 'income', component: Income },
           { path: 'movements', component: Movements }
+        ]
+      },
+      {
+        path: 'purchases',
+        children: [
+          { path: '', redirectTo: 'historial', pathMatch: 'full' },
+          { path: 'historial', component: PurchaseGetall },
+          /*{ path: 'proveedor', component: Provideer },*/
         ]
       },
       { path: 'categoria', component: CategoryGetall },

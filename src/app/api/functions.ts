@@ -25,3 +25,5 @@ export type { InventoryGetall$Params as InventoryGetall$Params } from './fn/inve
 export { inventoryGetall as inventoryGetall } from './fn/inventory/inventory-getall';
 export type { LotGetall$Params as LotGetall$Params } from './fn/lot/lot-getall';
 export { lotGetall as lotGetall } from './fn/lot/lot-getall';
+export type { PurchaseGetall$Params as PurchaseGetall$Params } from './fn/purchase/purchase-getall';
+export { purchaseGetall as purchaseGetall } from './fn/purchase/purchase-getall';

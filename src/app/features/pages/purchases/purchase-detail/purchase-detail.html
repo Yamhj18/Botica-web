@@ -1,0 +1,73 @@
+<p-dialog [visible]="visible()" (visibleChange)="visibleChange.emit($event)" [modal]="true" [draggable]="false"
+    [resizable]="false" [style]="{ width: '650px' }" header="Detalle de Compra">
+
+    @if (compra(); as c) {
+    <div class="flex flex-col gap-4">
+
+        <div class="grid grid-cols-2 gap-3">
+            <div class="bg-gray-50 rounded-xl p-3">
+                <p class="text-xs text-gray-400 mb-1">N° Compra</p>
+                <p class="text-sm font-bold font-mono text-gray-700">#{{ getIdCorto(c.idMovement) }}</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-3">
+                <p class="text-xs text-gray-400 mb-1">Fecha</p>
+                <p class="text-sm font-bold text-gray-700">{{ c.movementDate }}</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-3">
+                <p class="text-xs text-gray-400 mb-1">Proveedor</p>
+                <p class="text-sm font-bold text-gray-700">{{ c.supplierName ?? '—' }}</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-3">
+                <p class="text-xs text-gray-400 mb-1">Registrado por</p>
+                <p class="text-sm font-bold text-gray-700">{{ c.userName ?? '—' }}</p>
+            </div>
+            @if (c.observation) {
+            <div class="bg-gray-50 rounded-xl p-3 col-span-2">
+                <p class="text-xs text-gray-400 mb-1">Observación</p>
+                <p class="text-sm font-bold text-gray-700">{{ c.observation }}</p>
+            </div>
+            }
+        </div>
+
+        <div class="overflow-x-auto rounded-xl border border-gray-100">
+            <table class="w-full text-sm">
+                <thead class="bg-pink-50/70">
+                    <tr>
+                        <th class="text-xs font-bold text-pink-500 uppercase px-4 py-2 text-left">Producto</th>
+                        <th class="text-xs font-bold text-pink-500 uppercase px-4 py-2 text-left">Lote</th>
+                        <th class="text-xs font-bold text-pink-500 uppercase px-4 py-2 text-left">Vencimiento</th>
+                        <th class="text-xs font-bold text-pink-500 uppercase px-4 py-2 text-right">Cantidad</th>
+                        <th class="text-xs font-bold text-pink-500 uppercase px-4 py-2 text-right">Costo u.</th>
+                        <th class="text-xs font-bold text-pink-500 uppercase px-4 py-2 text-right">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (d of c.detalles ?? []; track d.idDetail) {
+                    <tr class="border-t border-gray-100 hover:bg-pink-50/20">
+                        <td class="px-4 py-2 font-medium text-gray-700">{{ d.productName ?? '—' }}</td>
+                        <td class="px-4 py-2 text-gray-500 font-mono text-xs">{{ d.lotCode ?? '—' }}</td>
+                        <td class="px-4 py-2 text-xs text-gray-500">{{ d.expirationDate ?? '—' }}</td>
+                        <td class="px-4 py-2 text-right font-bold text-gray-700">{{ d.quantity }} u.</td>
+                        <td class="px-4 py-2 text-right text-gray-500">S/ {{ Number(d.unitCost) || 0 }}</td>
+                        <td class="px-4 py-2 text-right font-bold text-pink-600">
+                            S/ {{ Number(d.subtotal) || 0 }}
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+                <tfoot class="bg-gray-50">
+                    <tr>
+                        <td colspan="5" class="px-4 py-2 text-right text-xs font-bold text-gray-500 uppercase">Total
+                        </td>
+                        <td class="px-4 py-2 text-right font-black text-pink-600">
+                            S/ {{ Number(c.costoTotal) || 0 }}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+    }
+
+</p-dialog>
