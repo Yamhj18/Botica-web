@@ -11,7 +11,7 @@ create table tuser (
   password varchar(200) not null,
   cellPhone char(9) null,
   role varchar(30) not null,/*Administrador, Vendedor, Quimico*/
-  status varchar(20) not null,/*Activo, Inactivo*/
+  status varchar(20) not null,/*Activo, Inactivo, o suspendido*/
   createdAt datetime not null,
   updatedAt datetime not null
 );
@@ -41,7 +41,7 @@ create table tsupplier (
   phone varchar(20),
   address varchar(150),
   email varchar(100),
-  status varchar(100) not null,/*Activo, Inactivo*/
+  status varchar(100) not null,/*Activo, Inactivo, suspendido*/
   createdAt datetime not null,
   updatedAt datetime not null
 );
