@@ -39,7 +39,11 @@ This will compile your project and store the build artifacts in the `dist/` dire
 ## Running unit tests
 
 To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Cambios en la rama testing
 
+- Se realizaron pruebas de integración.
+- Se verificó la fusión con la rama dev-backend.
+- Se validó el funcionamiento del módulo de inventario.
 ```bash
 ng test
 ```
