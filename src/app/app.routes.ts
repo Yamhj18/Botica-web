@@ -19,6 +19,7 @@ import { Income } from './features/pages/inventory/income/income';
 import { Movements } from './features/pages/inventory/movements/movements';
 import { LotGetall } from './features/pages/lot/lot-getall/lot-getall';
 import { PurchaseGetall } from './features/pages/purchases/purchase-getall/purchase-getall';
+import { SupplierGetall } from './features/pages/supplier/supplier-getall/supplier-getall';
 
 const authGuard: CanActivateFn = () => {
   const router = inject(Router);
@@ -65,7 +66,7 @@ export const routes: Routes = [
         children: [
           { path: '', redirectTo: 'historial', pathMatch: 'full' },
           { path: 'historial', component: PurchaseGetall },
-          /*{ path: 'proveedor', component: Provideer },*/
+          { path: 'proveedor', component: SupplierGetall },
         ]
       },
       { path: 'categoria', component: CategoryGetall },

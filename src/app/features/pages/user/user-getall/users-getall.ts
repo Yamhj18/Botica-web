@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { Api } from '../../../../api/api';
-import { userGetall, updateStatus } from '../../../../api/functions';
+import { userGetall, userStatus } from '../../../../api/functions';
 import { UsersSidebar } from '../users-sidebar/users-sidebar';
 import { UsersTable } from '../users-table/users-table';
 import { DialogModule } from 'primeng/dialog';
@@ -120,7 +120,7 @@ export class UsersList implements OnInit {
   onToggleStatus(user: any): void {
     const nuevoEstado = user.status?.toLowerCase() === 'activo' ? 'inactivo' : 'activo';
 
-    this.api.invoke$Response(updateStatus, { id: user.idUser, newStatus: nuevoEstado })
+    this.api.invoke$Response(userStatus, { id: user.idUser, newStatus: nuevoEstado })
       .then((raw: any) => {
         const res = typeof raw.body === 'string' ? JSON.parse(raw.body) : raw.body;
         if (res.type === 'success') {

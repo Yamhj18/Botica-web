@@ -1,1 +1,22 @@
-<p>supplier-getall works!</p>
+<div class="p-4 flex flex-col gap-6">
+
+    <app-supplier-kpi [totalProveedores]="totalProveedores()" [activos]="activos()" [inactivos]="inactivos()"
+        [conRuc]="conRuc()" />
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+        <app-supplier-sidebar [busqueda]="busqueda()" [estadoSeleccionado]="estadoSeleccionado()"
+            (busquedaChange)="onBusqueda($event)" (estadoChange)="onEstadoChange($event)"
+            (limpiarFiltros)="onLimpiarFiltros()" (nuevo)="onNuevo()" />
+
+        <div class="lg:col-span-3">
+            <app-supplier-table [proveedores]="filtrados()" [loading]="loading()" [error]="error()"
+                (editar)="onEditar($event)" (toggleStatus)="onToggleStatus($event)" (nuevo)="onNuevo()" />
+        </div>
+
+    </div>
+
+    <app-supplier-new [visible]="showForm()" [proveedor]="proveedorSeleccionado()"
+        (visibleChange)="showForm.set($event)" (guardado)="onGuardado()" />
+
+</div>

@@ -1,9 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-supplier-table',
-  imports: [],
+  imports: [TableModule, ButtonModule, TooltipModule],
   templateUrl: './supplier-table.html',
   styleUrl: './supplier-table.css',
 })
-export class SupplierTable {}
+export class SupplierTable {
+  proveedores = input.required<any[]>();
+  loading = input<boolean>(false);
+  error = input<string>('');
+
+  editar = output<any>();
+  toggleStatus = output<any>();
+  nuevo = output<void>();
+}

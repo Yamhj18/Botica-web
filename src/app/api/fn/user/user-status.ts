@@ -8,14 +8,14 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 
-export interface UpdateStatus$Params {
+export interface UserStatus$Params {
   id: string;
   newStatus: string;
       body?: any
 }
 
-export function updateStatus(http: HttpClient, rootUrl: string, params: UpdateStatus$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, updateStatus.PATH, 'put');
+export function userStatus(http: HttpClient, rootUrl: string, params: UserStatus$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, userStatus.PATH, 'put');
   if (params) {
     rb.path('id', params.id, {});
     rb.path('newStatus', params.newStatus, {});
@@ -32,4 +32,4 @@ export function updateStatus(http: HttpClient, rootUrl: string, params: UpdateSt
   );
 }
 
-updateStatus.PATH = '/users/status/{id}/{newStatus}';
+userStatus.PATH = '/users/status/{id}/{newStatus}';

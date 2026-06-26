@@ -1,1 +1,147 @@
-<p>supplier-table works!</p>
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-4">
+
+    <div class="flex items-center justify-between flex-wrap gap-3">
+        <h2 class="text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-3">
+            <span class="p-2 bg-pink-50 text-pink-600 rounded-xl inline-flex items-center justify-center">
+                <i class="pi pi-truck text-lg"></i>
+            </span>
+            Proveedores
+        </h2>
+        <button type="button" (click)="nuevo.emit()"
+            class="flex items-center gap-2 bg-pink-500 hover:bg-pink-600 text-white px-4 py-4 rounded-xl text-xs font-bold transition-all shadow-sm cursor-pointer">
+            <i class="pi pi-plus text-xs"></i>
+            Nuevo Proveedor
+        </button>
+    </div>
+
+    @if (error()) {
+    <div class="p-4 bg-red-50 border border-red-100 rounded-xl text-red-600 text-sm flex items-start gap-3">
+        <i class="pi pi-exclamation-circle text-base mt-0.5"></i>
+        <p>{{ error() }}</p>
+    </div>
+    }
+
+    <div class="overflow-x-auto rounded-xl border border-gray-100">
+        <p-table [value]="proveedores()" [loading]="loading()" [rowHover]="true" [paginator]="true" [rows]="5"
+            styleClass="p-datatable-sm p-datatable-striped">
+
+            <ng-template #header>
+                <tr class="bg-pink-50/70 text-left">
+                    <th pSortableColumn="name"
+                        class="text-xs font-bold text-pink-500 uppercase tracking-wider px-4 py-4 cursor-pointer hover:bg-pink-100/40">
+                        <div class="flex items-center gap-1.5">
+                            <i class="pi pi-building text-xs"></i> Proveedor
+                            <p-sortIcon field="name" />
+                        </div>
+                    </th>
+                    <th class="text-xs font-bold text-pink-500 uppercase tracking-wider px-4 py-4">
+                        <div class="flex items-center gap-1.5">
+                            <i class="pi pi-id-card text-xs"></i> RUC
+                        </div>
+                    </th>
+                    <th class="text-xs font-bold text-pink-500 uppercase tracking-wider px-4 py-4">
+                        <div class="flex items-center gap-1.5">
+                            <i class="pi pi-phone text-xs"></i> Teléfono
+                        </div>
+                    </th>
+                    <th class="text-xs font-bold text-pink-500 uppercase tracking-wider px-4 py-4">
+                        <div class="flex items-center gap-1.5">
+                            <i class="pi pi-envelope text-xs"></i> Email
+                        </div>
+                    </th>
+                    <th class="text-xs font-bold text-pink-500 uppercase tracking-wider px-4 py-4">
+                        <div class="flex items-center gap-1.5">
+                            <i class="pi pi-map-marker text-xs"></i> Dirección
+                        </div>
+                    </th>
+                    <th class="text-xs font-bold text-pink-500 uppercase tracking-wider px-4 py-4">
+                        <div class="flex items-center gap-1.5">
+                            <i class="pi pi-info-circle text-xs"></i> Estado
+                        </div>
+                    </th>
+                    <th class="text-xs font-bold text-pink-500 uppercase tracking-wider px-4 py-4 text-right pr-6">
+                        <div class="flex items-center justify-end gap-1.5">
+                            <i class="pi pi-cog text-xs"></i> Acciones
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template #body let-p>
+                <tr class="hover:bg-pink-50/30 transition-colors">
+
+                    <td class="px-4 py-4">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center shrink-0">
+                                <span class="text-xs font-bold text-pink-600">
+                                    {{ p.name?.charAt(0)?.toUpperCase() ?? '?' }}
+                                </span>
+                            </div>
+                            <p class="text-sm font-semibold text-gray-800 m-0">{{ p.name }}</p>
+                        </div>
+                    </td>
+
+                    <td class="px-4 py-4">
+                        @if (p.ruc) {
+                        <span class="text-xs font-mono font-bold text-gray-600 bg-gray-100 px-2.5 py-1 rounded-lg">
+                            {{ p.ruc }}
+                        </span>
+                        } @else {
+                        <span class="text-xs text-gray-300 italic">—</span>
+                        }
+                    </td>
+
+                    <td class="px-4 py-4">
+                        <span class="text-sm text-gray-600">{{ p.phone || '—' }}</span>
+                    </td>
+
+                    <td class="px-4 py-4">
+                        <span class="text-sm text-gray-600">{{ p.email || '—' }}</span>
+                    </td>
+
+                    <td class="px-4 py-4">
+                        <span class="text-xs text-gray-500 truncate max-w-[160px] block">{{ p.address || '—' }}</span>
+                    </td>
+
+                    <td class="px-4 py-4">
+                        @if (p.status === 'activo') {
+                        <div class="flex items-center gap-2 text-xs font-bold tracking-wide text-emerald-600">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            Activo
+                        </div>
+                        } @else {
+                        <div class="flex items-center gap-2 text-xs font-bold tracking-wide text-red-500">
+                            <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                            Inactivo
+                        </div>
+                        }
+                    </td>
+
+                    <td class="px-4 py-4">
+                        <div class="flex items-center justify-center gap-1">
+                            <p-button icon="pi pi-pencil" severity="secondary" [rounded]="true" [text]="true"
+                                size="small" pTooltip="Editar" tooltipPosition="top" (onClick)="editar.emit(p)" />
+                            <p-button [icon]="p.status === 'activo' ? 'pi pi-lock' : 'pi pi-lock-open'"
+                                [severity]="p.status === 'activo' ? 'warn' : 'success'" [rounded]="true" [text]="true"
+                                size="small" [pTooltip]="p.status === 'activo' ? 'Desactivar' : 'Activar'"
+                                tooltipPosition="top" (onClick)="toggleStatus.emit(p)" />
+                        </div>
+                    </td>
+
+                </tr>
+            </ng-template>
+
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="7">
+                        <div class="flex flex-col items-center justify-center py-12">
+                            <i class="pi pi-inbox text-4xl mb-2 text-pink-200"></i>
+                            <p class="text-xs font-medium text-gray-400">No se encontraron proveedores.</p>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+
+        </p-table>
+    </div>
+</div>
