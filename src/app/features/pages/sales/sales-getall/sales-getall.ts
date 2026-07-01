@@ -5,7 +5,7 @@ import { SalesSidebar } from '../sales-sidebar/sales-sidebar';
 import { SalesTable } from '../sales-table/sales-table';
 import { SalesNew } from '../sales-new/sales-new';
 import { SalesDetail } from '../sales-detail/sales-detail';
-import { productGetall, saleGetall } from '../../../../api/functions';
+import { customerGetall, productGetall, saleGetall } from '../../../../api/functions';
 
 @Component({
   selector: 'app-sales-getall',
@@ -29,7 +29,6 @@ export class SalesGetall implements OnInit {
   showNew = signal<boolean>(false);
   showDetail = signal<boolean>(false);
 
-  // --- Filtrados ---
   filtrados = computed(() => {
     const q = this.busqueda().toLowerCase().trim();
     const metodo = this.metodoPagoSeleccionado();
@@ -46,7 +45,6 @@ export class SalesGetall implements OnInit {
     return lista;
   });
 
-  // --- KPIs ---
   totalVentas = computed(() => this.ventas().length);
 
   montoTotal = computed(() =>
@@ -70,7 +68,6 @@ export class SalesGetall implements OnInit {
     return total / completadas.length;
   });
 
-  // --- Sidebar ---
   metodosPago = computed(() => {
     return this.ventas().reduce((acc: any[], v: any) => {
       const metodo = v.paymentMethod || 'Otro';
