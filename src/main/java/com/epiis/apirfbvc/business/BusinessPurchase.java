@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.epiis.apirfbvc.dto.response.ResponsePurchaseGetAll;
+import com.epiis.apirfbvc.dto.response.ResponsePurchaseRecent;
 import com.epiis.apirfbvc.entity.EntityInventoryMovement;
 import com.epiis.apirfbvc.entity.EntityInventoryMovementDetail;
 import com.epiis.apirfbvc.repository.RepositoryInventoryMovement;
@@ -85,5 +86,44 @@ public class BusinessPurchase {
         data.put("detalles", detallesMap);
 
         return data;
+    }
+    
+    public ResponsePurchaseRecent getRecent(int limit) {
+        ResponsePurchaseRecent response = new ResponsePurchaseRecent();
+
+        List<EntityInventoryMovement> movimientos = repositoryMovement
+            .findByTypeOrderByMovementDateDesc("Entrada")
+            .stream()
+            .limit(limit)
+            .collect(Collectors.toList());
+
+        List<Map<String, Object>> items = movimientos.stream()
+            .map(m -> {
+                List<EntityInventoryMovementDetail> detalles =
+                    repositoryMovementDetail.findByMovement_IdMovement(m.getIdMovement());
+
+                double costoTotal = detalles.stream()
+                    .mapToDouble(d -> d.getQuantity() *
+                        (d.getUnitCost() != null ? d.getUnitCost().doubleValue() : 0))
+                    .sum();
+
+                String supplierName = detalles.stream()
+                    .filter(d -> d.getLot() != null && d.getLot().getSupplier() != null)
+                    .map(d -> d.getLot().getSupplier().getName())
+                    .findFirst()
+                    .orElse("—");
+
+                Map<String, Object> data = new HashMap<>();
+                data.put("supplierName", supplierName);
+                data.put("costoTotal", costoTotal);
+                data.put("totalItems", detalles.size());
+                data.put("movementDate", m.getMovementDate().toString());
+                return data;
+            })
+            .collect(Collectors.toList());
+
+        response.setListPurchases(items);
+        response.success();
+        return response;
     }
 }
