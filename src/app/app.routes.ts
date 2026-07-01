@@ -12,14 +12,15 @@ import { ProductGetall } from './features/pages/product/product-getall/product-g
 import { CategoryGetall } from './features/pages/category/category-getall/category-getall';
 import { LaboratoryGetall } from './features/pages/laboratory/laboratory-getall/laboratory-getall';
 import { inject } from '@angular/core';
-import { Sales } from './features/sales/sales';
-import { SalesDashboard } from './features/sales/sales-dashboard/sales-dashboard';
 import { CurrentStock } from './features/pages/inventory/current-stock/current-stock';
 import { Income } from './features/pages/inventory/income/income';
 import { Movements } from './features/pages/inventory/movements/movements';
 import { LotGetall } from './features/pages/lot/lot-getall/lot-getall';
 import { PurchaseGetall } from './features/pages/purchases/purchase-getall/purchase-getall';
 import { SupplierGetall } from './features/pages/supplier/supplier-getall/supplier-getall';
+import { Seller } from './features/seller/seller';
+import { SellerDashboard } from './features/seller/seller-dashboard/seller-dashboard';
+import { SalesGetall } from './features/pages/sales/sales-getall/sales-getall';
 
 const authGuard: CanActivateFn = () => {
   const router = inject(Router);
@@ -69,20 +70,28 @@ export const routes: Routes = [
           { path: 'proveedor', component: SupplierGetall },
         ]
       },
+      {
+        path: 'ventas',
+        children: [
+          { path: '', redirectTo: 'nueva', pathMatch: 'full' },
+          { path: 'nueva', component: SalesGetall },
+        ]
+      },
       { path: 'categoria', component: CategoryGetall },
       { path: 'laboratorio', component: LaboratoryGetall },
       { path: 'profile', component: Profile },
       { path: 'profile/edit-profile', component: EditProfile },
       { path: 'profile/password-settings', component: PasswordSettings },
+
     ]
   },
   {
-    path: 'sales',
-    component: Sales,
+    path: 'seller',
+    component: Seller,
     canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: SalesDashboard },
+      { path: 'dashboard', component: SellerDashboard },
     ]
   }
 ];
