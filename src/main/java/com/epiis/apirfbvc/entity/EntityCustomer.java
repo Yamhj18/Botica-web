@@ -19,23 +19,13 @@ public class EntityCustomer {
 
     @Column(name = "documentType")
     private String documentType;
+    
     @Column(name = "documentNumber")
     private String documentNumber;
 
     @Column(name = "name")
     private String name;
-    @Column(name = "phone")
-    private String phone;
-    @Column(name = "email")
-    private String email;
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "status")
-    private String status;
 
     @Column(name = "createdAt")
     private Date createdAt;
-    @Column(name = "updatedAt")
-    private Date updatedAt;
 }

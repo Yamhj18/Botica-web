@@ -12,6 +12,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ResponseCustomerGetAll extends ResponseGeneric {
-    private List<Map<String, Object>> listCustomers = new ArrayList<>();
-
+	List<Map<String, String>> listCustomers = new ArrayList<>();
 }
