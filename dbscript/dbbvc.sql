@@ -290,3 +290,4 @@ select * from tuser;
 select * from tcategory;
 select * from tlaboratory;
 select * from tsupplier;
+select * from tcustomer;
