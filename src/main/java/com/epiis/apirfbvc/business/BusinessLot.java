@@ -73,4 +73,29 @@ public class BusinessLot {
             return "Vigente";
         }
     }
+    
+    public ResponseLotGetAll getByProduct(String idProduct) {
+        ResponseLotGetAll response = new ResponseLotGetAll();
+
+        List<EntityLot> lots = repositoryLot.findByProduct_IdProduct(idProduct);
+
+        List<Map<String, String>> items = lots.stream()
+            .filter(l -> l.getCurrentStock() > 0)
+            .map(l -> {
+                Map<String, String> data = new HashMap<>();
+                data.put("idLot", l.getIdLot());
+                data.put("code", l.getCode());
+                data.put("currentStock", String.valueOf(l.getCurrentStock()));
+                data.put("expirationDate", l.getExpirationDate() != null
+                    ? l.getExpirationDate().toString() : "");
+                data.put("purchasePrice", l.getPurchasePrice() != null
+                    ? l.getPurchasePrice().toString() : "0");
+                return data;
+            })
+            .collect(Collectors.toList());
+
+        response.setListLots(items);
+        response.success();
+        return response;
+    }
 }

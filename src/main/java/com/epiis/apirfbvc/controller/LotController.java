@@ -2,6 +2,7 @@ package com.epiis.apirfbvc.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,5 +21,10 @@ public class LotController {
 	@GetMapping(path = "getall")
 	public ResponseEntity<ResponseLotGetAll> getAll() {
 	    return ResponseEntity.ok(businessLot.getAll());
+	}
+	
+	@GetMapping(path = "byProduct/{idProduct}")
+	public ResponseEntity<ResponseLotGetAll> getByProduct(@PathVariable String idProduct) {
+	    return ResponseEntity.ok(businessLot.getByProduct(idProduct));
 	}
 }
