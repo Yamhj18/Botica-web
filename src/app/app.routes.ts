@@ -22,6 +22,7 @@ import { Seller } from './features/seller/seller';
 import { SellerDashboard } from './features/seller/seller-dashboard/seller-dashboard';
 import { SalesGetall } from './features/pages/sales/sales-getall/sales-getall';
 import { SalesNew } from './features/pages/sales/sales-new/sales-new';
+import { CustomerGetall } from './features/pages/customer/customer-getall/customer-getall';
 
 const authGuard: CanActivateFn = () => {
   const router = inject(Router);
@@ -77,6 +78,13 @@ export const routes: Routes = [
           { path: '', redirectTo: 'nueva', pathMatch: 'full' },
           { path: 'nueva', component: SalesNew },
           { path: 'historial', component: SalesGetall }
+        ]
+      },
+      {
+        path: 'clientes',
+        children: [
+          { path: '', redirectTo: '', pathMatch: 'full' },
+          { path: '', component: CustomerGetall },
         ]
       },
       { path: 'categoria', component: CategoryGetall },
