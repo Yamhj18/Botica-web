@@ -1,7 +1,23 @@
-<p-dialog [visible]="visible()" (visibleChange)="visibleChange.emit($event)" [modal]="true" [draggable]="false"
-    [resizable]="false" [style]="{ width: '900px' }" header="Nueva Venta">
+<div class="p-6 grid grid-cols-3 gap-6 h-full">
 
-    <div class="flex flex-col gap-5 py-2">
+    <!-- COLUMNA IZQUIERDA: productos -->
+    <div class="col-span-2 flex flex-col gap-5">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between">
+            <h2 class="text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-3">
+                <span class="p-2 bg-pink-50 text-pink-600 rounded-xl inline-flex items-center justify-center">
+                    <i class="pi pi-shopping-cart text-lg"></i>
+                </span>
+                Nueva Venta
+            </h2>
+            @if (successMessage()) {
+            <div
+                class="flex items-center gap-2 px-4 py-2 bg-green-50 border border-green-200 rounded-xl text-green-600 text-xs font-bold">
+                <i class="pi pi-check-circle"></i> {{ successMessage() }}
+            </div>
+            }
+        </div>
 
         @if (error()) {
         <div class="p-3 bg-red-50 border border-red-100 rounded-xl text-red-600 text-xs flex items-center gap-2">
@@ -9,45 +25,38 @@
         </div>
         }
 
-        <div class="grid grid-cols-3 gap-4">
+        <!-- CLIENTE + MÉTODO -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col gap-4">
+            <div class="grid grid-cols-2 gap-4">
 
-            <div class="col-span-2 flex flex-col gap-3">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Cliente</label>
+                <!-- Cliente -->
+                <div class="flex flex-col gap-3">
+                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Cliente</label>
 
-                <div class="flex items-center gap-2">
-                    <button
-                        (click)="tieneCliente.set(false); clienteSeleccionado.set(null); showNuevoCliente.set(false)"
-                        class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer"
-                        [class]="!tieneCliente()
-                            ? 'bg-gray-700 text-white border-gray-700'
-                            : 'bg-white text-gray-400 border-gray-200 hover:border-gray-300'">
-                        <i class="pi pi-user-minus text-xs"></i>
-                        Venta rápida
-                    </button>
-                    <button (click)="tieneCliente.set(true)"
-                        class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer"
-                        [class]="tieneCliente()
-                            ? 'bg-pink-500 text-white border-pink-500'
-                            : 'bg-white text-gray-400 border-gray-200 hover:border-pink-300'">
-                        <i class="pi pi-user text-xs"></i>
-                        Con cliente
-                    </button>
-                </div>
+                    <div class="flex items-center gap-2">
+                        <button
+                            (click)="tieneCliente.set(false); clienteSeleccionado.set(null); showNuevoCliente.set(false)"
+                            class="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer"
+                            [class]="!tieneCliente() ? 'bg-gray-700 text-white border-gray-700' : 'bg-white text-gray-400 border-gray-200 hover:border-gray-300'">
+                            <i class="pi pi-bolt text-xs"></i> Venta rápida
+                        </button>
+                        <button (click)="tieneCliente.set(true)"
+                            class="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer"
+                            [class]="tieneCliente() ? 'bg-pink-500 text-white border-pink-500' : 'bg-white text-gray-400 border-gray-200 hover:border-pink-300'">
+                            <i class="pi pi-user text-xs"></i> Con cliente
+                        </button>
+                    </div>
 
-                @if (tieneCliente()) {
-                <div class="flex flex-col gap-2">
-
+                    @if (tieneCliente()) {
                     <div class="flex items-center gap-1 bg-gray-100 rounded-xl p-1">
                         <button (click)="showNuevoCliente.set(false)"
-                            class="flex-1 text-xs font-bold py-1.5 rounded-lg transition-all cursor-pointer" [class]="!showNuevoCliente()
-                                ? 'bg-white text-gray-700 shadow-sm'
-                                : 'text-gray-400 hover:text-gray-600'">
+                            class="flex-1 text-xs font-bold py-1.5 rounded-lg transition-all cursor-pointer"
+                            [class]="!showNuevoCliente() ? 'bg-white text-gray-700 shadow-sm' : 'text-gray-400'">
                             <i class="pi pi-search text-xs mr-1"></i> Buscar
                         </button>
                         <button (click)="showNuevoCliente.set(true); clienteSeleccionado.set(null)"
-                            class="flex-1 text-xs font-bold py-1.5 rounded-lg transition-all cursor-pointer" [class]="showNuevoCliente()
-                                ? 'bg-white text-gray-700 shadow-sm'
-                                : 'text-gray-400 hover:text-gray-600'">
+                            class="flex-1 text-xs font-bold py-1.5 rounded-lg transition-all cursor-pointer"
+                            [class]="showNuevoCliente() ? 'bg-white text-gray-700 shadow-sm' : 'text-gray-400'">
                             <i class="pi pi-plus text-xs mr-1"></i> Nuevo
                         </button>
                     </div>
@@ -58,16 +67,13 @@
                         class="flex items-center justify-between border border-pink-300 rounded-xl px-3 py-2.5 bg-pink-50">
                         <div class="flex items-center gap-2">
                             <div class="w-7 h-7 rounded-full bg-pink-200 flex items-center justify-center">
-                                <span class="text-xs font-bold text-pink-700">
-                                    {{ clienteSeleccionado().name?.charAt(0)?.toUpperCase() }}
-                                </span>
+                                <span class="text-xs font-bold text-pink-700">{{
+                                    clienteSeleccionado().name?.charAt(0)?.toUpperCase() }}</span>
                             </div>
                             <div>
                                 <p class="text-xs font-bold text-gray-800 m-0">{{ clienteSeleccionado().name }}</p>
-                                <p class="text-[10px] text-gray-400 m-0">
-                                    {{ clienteSeleccionado().documentType }} — {{ clienteSeleccionado().documentNumber
-                                    }}
-                                </p>
+                                <p class="text-[10px] text-gray-400 m-0">{{ clienteSeleccionado().documentType }} — {{
+                                    clienteSeleccionado().documentNumber }}</p>
                             </div>
                         </div>
                         <button (click)="clienteSeleccionado.set(null)"
@@ -97,10 +103,9 @@
                         </p>
                         <div class="grid grid-cols-2 gap-3">
                             <div class="flex flex-col gap-1">
-                                <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tipo
-                                    doc.</label>
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Tipo doc.</label>
                                 <select
-                                    class="text-xs border border-gray-200 rounded-lg px-2 py-2 outline-none focus:border-blue-300 bg-white cursor-pointer"
+                                    class="text-xs border border-gray-200 rounded-lg px-2 py-2 outline-none bg-white cursor-pointer"
                                     (change)="nuevoCliente.update(c => ({ ...c, documentType: $any($event.target).value }))">
                                     <option value="DNI">DNI</option>
                                     <option value="RUC">RUC</option>
@@ -108,246 +113,243 @@
                                 </select>
                             </div>
                             <div class="flex flex-col gap-1">
-                                <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                                    N° Documento <span class="text-red-400">*</span>
-                                </label>
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">N° Documento <span
+                                        class="text-red-400">*</span></label>
                                 <input type="text" placeholder="12345678"
-                                    class="text-xs border border-gray-200 rounded-lg px-2 py-2 outline-none focus:border-blue-300"
+                                    class="text-xs border border-gray-200 rounded-lg px-2 py-2 outline-none"
                                     [value]="nuevoCliente().documentNumber"
                                     (input)="nuevoCliente.update(c => ({ ...c, documentNumber: $any($event.target).value }))" />
                             </div>
                         </div>
                         <div class="flex flex-col gap-1">
-                            <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                                Nombre completo <span class="text-red-400">*</span>
-                            </label>
+                            <label class="text-[10px] font-bold text-slate-400 uppercase">Nombre completo <span
+                                    class="text-red-400">*</span></label>
                             <input type="text" placeholder="Nombre del cliente"
-                                class="text-xs border border-gray-200 rounded-lg px-2 py-2 outline-none focus:border-blue-300"
+                                class="text-xs border border-gray-200 rounded-lg px-2 py-2 outline-none"
                                 [value]="nuevoCliente().name"
                                 (input)="nuevoCliente.update(c => ({ ...c, name: $any($event.target).value }))" />
                         </div>
                         <button (click)="onGuardarNuevoCliente()" [disabled]="loadingCliente()"
-                            class="flex items-center justify-center gap-2 w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer disabled:opacity-50">
+                            class="flex items-center justify-center gap-2 w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-xs font-bold cursor-pointer disabled:opacity-50">
                             <i [class]="loadingCliente() ? 'pi pi-spin pi-spinner' : 'pi pi-check'" class="text-xs"></i>
                             {{ loadingCliente() ? 'Guardando...' : 'Guardar y seleccionar' }}
                         </button>
                     </div>
                     }
+                    } @else {
+                    <div
+                        class="flex items-center gap-2 px-3 py-2.5 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                        <i class="pi pi-bolt text-gray-300 text-sm"></i>
+                        <span class="text-xs text-gray-400 italic">Se registrará sin datos de cliente</span>
+                    </div>
+                    }
+                </div>
 
+                <!-- Método de pago -->
+                <div class="flex flex-col gap-3">
+                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                        Método de pago <span class="text-red-400">*</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-2">
+                        @for (metodo of metodos; track metodo) {
+                        <button (click)="metodoPago.set(metodo)"
+                            class="px-3 py-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer"
+                            [class]="metodoPago() === metodo
+                  ? 'bg-pink-500 text-white border-pink-500'
+                  : 'bg-white text-gray-500 border-gray-200 hover:border-pink-300'">
+                            {{ metodo }}
+                        </button>
+                        }
+                    </div>
                 </div>
-                } @else {
-                <div
-                    class="flex items-center gap-2 px-3 py-2.5 bg-gray-50 rounded-xl border border-dashed border-gray-200">
-                    <i class="pi pi-bolt text-gray-300 text-sm"></i>
-                    <span class="text-xs text-gray-400 italic">Se registrará sin datos de cliente</span>
-                </div>
-                }
+
             </div>
+        </div>
 
-            <div class="flex flex-col gap-1.5">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">
-                    Método de pago <span class="text-red-400">*</span>
-                </label>
-                <div class="grid grid-cols-2 gap-2">
-                    @for (metodo of metodos; track metodo) {
-                    <button (click)="metodoPago.set(metodo)"
-                        class="px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer" [class]="metodoPago() === metodo
-                            ? 'bg-pink-500 text-white border-pink-500'
-                            : 'bg-white text-gray-500 border-gray-200 hover:border-pink-300'">
-                        {{ metodo }}
-                    </button>
+        <!-- BUSCADOR PRODUCTOS -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col gap-4">
+            <div class="flex items-center justify-between">
+                <p class="text-sm font-bold text-gray-700 flex items-center gap-2 m-0">
+                    <i class="pi pi-box text-pink-400"></i> Productos
+                </p>
+                <div class="relative">
+                    <div
+                        class="flex items-center gap-2 border border-gray-200 rounded-xl px-3 py-2 bg-gray-50 hover:border-pink-300 transition-colors w-72">
+                        <i class="pi pi-search text-gray-400 text-xs"></i>
+                        <input type="text" placeholder="Buscar producto por nombre o SKU..."
+                            class="text-xs bg-transparent border-none outline-none w-full text-gray-600"
+                            [value]="busquedaProducto()" (input)="onBusquedaProducto($event)"
+                            (focus)="showProductSearch.set(true)" />
+                    </div>
+                    @if (showProductSearch() && productosFiltrados().length > 0) {
+                    <div
+                        class="absolute top-full right-0 mt-1 bg-white rounded-xl border border-gray-100 shadow-lg z-50 max-h-56 overflow-y-auto w-72">
+                        @for (p of productosFiltrados(); track p.idProduct) {
+                        <button (click)="onAgregarProducto(p)"
+                            class="flex items-center justify-between w-full px-3 py-2.5 hover:bg-pink-50 transition-colors text-left border-b border-gray-50 last:border-0 cursor-pointer">
+                            <div>
+                                <p class="text-xs font-semibold text-gray-800 m-0">{{ p.name }}</p>
+                                <p class="text-[10px] text-gray-400 m-0">{{ p.barcode }}</p>
+                            </div>
+                            <span class="text-xs font-bold text-pink-500 shrink-0 ml-2">S/ {{ p.priceSale }}</span>
+                        </button>
+                        }
+                    </div>
                     }
                 </div>
             </div>
 
-        </div>
-
-        <hr class="border-gray-100">
-
-        <div class="grid grid-cols-3 gap-4">
-
-            <div class="col-span-2 flex flex-col gap-3">
-
-                <div class="flex items-center justify-between">
-                    <p class="text-sm font-bold text-gray-700 flex items-center gap-2 m-0">
-                        <i class="pi pi-box text-pink-400"></i> Productos
-                    </p>
-                    <div class="relative">
-                        <div
-                            class="flex items-center gap-2 border border-gray-200 rounded-xl px-3 py-2 bg-gray-50 hover:border-pink-300 transition-colors w-64">
-                            <i class="pi pi-search text-gray-400 text-xs"></i>
-                            <input type="text" placeholder="Buscar producto..."
-                                class="text-xs bg-transparent border-none outline-none w-full text-gray-600"
-                                [value]="busquedaProducto()" (input)="onBusquedaProducto($event)"
-                                (focus)="showProductSearch.set(true)" />
-                        </div>
-                        @if (showProductSearch() && productosFiltrados().length > 0) {
-                        <div
-                            class="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl border border-gray-100 shadow-lg z-50 max-h-48 overflow-y-auto">
-                            @for (p of productosFiltrados(); track p.idProduct) {
-                            <button (click)="onAgregarProducto(p)"
-                                class="flex items-center justify-between w-full px-3 py-2.5 hover:bg-pink-50 transition-colors text-left border-b border-gray-50 last:border-0 cursor-pointer">
-                                <div>
-                                    <p class="text-xs font-semibold text-gray-800 m-0">{{ p.name }}</p>
-                                    <p class="text-[10px] text-gray-400 m-0">{{ p.barcode }}</p>
-                                </div>
-                                <span class="text-xs font-bold text-pink-500">S/ {{ p.priceSale }}</span>
-                            </button>
-                            }
-                        </div>
-                        }
-                    </div>
-                </div>
-
-                <div class="rounded-xl border border-gray-100 overflow-hidden">
-                    <table class="w-full text-sm">
-                        <thead class="bg-pink-50/70">
-                            <tr>
-                                <th class="text-xs font-bold text-pink-500 uppercase px-3 py-2.5 text-left">Producto
-                                </th>
-                                <th class="text-xs font-bold text-pink-500 uppercase px-3 py-2.5 text-left">Lote</th>
-                                <th class="text-xs font-bold text-pink-500 uppercase px-3 py-2.5 text-center">Stock</th>
-                                <th class="text-xs font-bold text-pink-500 uppercase px-3 py-2.5 text-center">Cant.</th>
-                                <th class="text-xs font-bold text-pink-500 uppercase px-3 py-2.5 text-right">Precio</th>
-                                <th class="text-xs font-bold text-pink-500 uppercase px-3 py-2.5 text-right">Subtotal
-                                </th>
-                                <th class="px-3 py-2.5"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (item of items(); track item.idProduct; let i = $index) {
-                            <tr class="border-t border-gray-100 hover:bg-pink-50/20">
-                                <td class="px-3 py-2.5">
-                                    <p class="text-xs font-semibold text-gray-800 m-0">{{ item.productName }}</p>
-                                    <p class="text-[10px] text-gray-400 m-0">SKU: {{ item.barcode }}</p>
-                                </td>
-                                <td class="px-3 py-2.5">
-                                    @if (item.lotes.length > 1) {
-                                    <select
-                                        class="text-xs font-mono text-gray-500 bg-gray-100 px-2 py-0.5 rounded border-none outline-none cursor-pointer"
-                                        (change)="onCambiarLote(i, $any($event.target).value)">
-                                        @for (l of item.lotes; track l.idLot) {
-                                        @if (Number(l.currentStock) > 0) {
-                                        <option [value]="l.idLot" [selected]="l.idLot === item.idLot">{{ l.code }}
-                                        </option>
-                                        }
-                                        }
-                                    </select>
-                                    } @else {
-                                    <span class="text-xs font-mono text-gray-500 bg-gray-100 px-2 py-0.5 rounded">{{
-                                        item.lotCode }}</span>
+            <!-- Tabla productos -->
+            <div class="rounded-xl border border-gray-100 overflow-hidden">
+                <table class="w-full text-sm">
+                    <thead class="bg-pink-50/70">
+                        <tr>
+                            <th class="text-xs font-bold text-pink-500 uppercase px-3 py-3 text-left">Producto</th>
+                            <th class="text-xs font-bold text-pink-500 uppercase px-3 py-3 text-left">Lote</th>
+                            <th class="text-xs font-bold text-pink-500 uppercase px-3 py-3 text-center">Stock</th>
+                            <th class="text-xs font-bold text-pink-500 uppercase px-3 py-3 text-center">Cant.</th>
+                            <th class="text-xs font-bold text-pink-500 uppercase px-3 py-3 text-right">Precio</th>
+                            <th class="text-xs font-bold text-pink-500 uppercase px-3 py-3 text-right">Subtotal</th>
+                            <th class="px-3 py-3"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of items(); track item.idProduct; let i = $index) {
+                        <tr class="border-t border-gray-100 hover:bg-pink-50/20 transition-colors">
+                            <td class="px-3 py-3">
+                                <p class="text-xs font-semibold text-gray-800 m-0">{{ item.productName }}</p>
+                                <p class="text-[10px] text-gray-400 m-0">SKU: {{ item.barcode }}</p>
+                            </td>
+                            <td class="px-3 py-3">
+                                @if (item.lotes.length > 1) {
+                                <select
+                                    class="text-xs font-mono text-gray-500 bg-gray-100 px-2 py-0.5 rounded border-none outline-none cursor-pointer"
+                                    (change)="onCambiarLote(i, $any($event.target).value)">
+                                    @for (l of item.lotes; track l.idLot) {
+                                    @if (Number(l.currentStock) > 0) {
+                                    <option [value]="l.idLot" [selected]="l.idLot === item.idLot">{{ l.code }}</option>
                                     }
-                                </td>
-                                <td class="px-3 py-2.5 text-center">
-                                    <span class="text-xs font-bold"
-                                        [class]="item.currentStock === 0 ? 'text-red-500' : item.currentStock <= 5 ? 'text-orange-500' : 'text-green-600'">
-                                        {{ item.currentStock }} u.
-                                    </span>
-                                </td>
-                                <td class="px-3 py-2.5 text-center">
-                                    <input type="number" [value]="item.quantity" min="1" [max]="item.currentStock"
-                                        class="w-14 text-center text-xs font-bold border border-gray-200 rounded-lg px-2 py-1 focus:border-pink-300 outline-none"
-                                        (change)="onCambiarCantidad(i, Number($any($event.target).value))" />
-                                </td>
-                                <td class="px-3 py-2.5 text-right">
-                                    <span class="text-xs font-bold text-gray-700">S/ {{ item.unitPrice | number:'1.2-2'
-                                        }}</span>
-                                </td>
-                                <td class="px-3 py-2.5 text-right">
-                                    <span class="text-xs font-bold text-pink-600">S/ {{ item.subtotal | number:'1.2-2'
-                                        }}</span>
-                                </td>
-                                <td class="px-3 py-2.5 text-center">
-                                    <button (click)="onEliminarItem(i)"
-                                        class="text-red-400 hover:text-red-600 transition-colors cursor-pointer bg-transparent border-none">
-                                        <i class="pi pi-times text-xs"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            }
-                            <tr class="border-t border-gray-100">
-                                <td colspan="7">
-                                    <div class="flex items-center gap-2 px-3 py-3 text-gray-300">
-                                        <i class="pi pi-plus-circle text-sm"></i>
-                                        <span class="text-xs italic">Busca un producto para agregarlo...</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="flex flex-col gap-3">
-                <p class="text-sm font-bold text-gray-700 flex items-center gap-2 m-0">
-                    <i class="pi pi-receipt text-pink-400"></i> Resumen
-                </p>
-
-                <div class="bg-gray-50 rounded-2xl border border-gray-100 p-4 flex flex-col gap-3">
-
-                    <div class="bg-white rounded-xl border border-gray-100 p-3">
-                        <p class="text-[10px] text-gray-400 uppercase font-bold mb-1">Cliente</p>
-                        @if (clienteSeleccionado()) {
-                        <p class="text-xs font-bold text-gray-700 m-0">{{ clienteSeleccionado().name }}</p>
-                        <p class="text-[10px] text-gray-400 m-0">{{ clienteSeleccionado().documentNumber }}</p>
-                        } @else {
-                        <p class="text-xs text-gray-300 italic m-0">Venta sin cliente</p>
+                                    }
+                                </select>
+                                } @else {
+                                <span class="text-xs font-mono text-gray-500 bg-gray-100 px-2 py-0.5 rounded">{{
+                                    item.lotCode }}</span>
+                                }
+                            </td>
+                            <td class="px-3 py-3 text-center">
+                                <span class="text-xs font-bold"
+                                    [class]="item.currentStock === 0 ? 'text-red-500' : item.currentStock <= 5 ? 'text-orange-500' : 'text-green-600'">
+                                    {{ item.currentStock }} u.
+                                </span>
+                            </td>
+                            <td class="px-3 py-3 text-center">
+                                <input type="number" [value]="item.quantity" min="1" [max]="item.currentStock"
+                                    class="w-14 text-center text-xs font-bold border border-gray-200 rounded-lg px-2 py-1 focus:border-pink-300 outline-none"
+                                    (change)="onCambiarCantidad(i, Number($any($event.target).value))" />
+                            </td>
+                            <td class="px-3 py-3 text-right">
+                                <span class="text-xs font-bold text-gray-700">S/ {{ item.unitPrice | number:'1.2-2'
+                                    }}</span>
+                            </td>
+                            <td class="px-3 py-3 text-right">
+                                <span class="text-xs font-bold text-pink-600">S/ {{ item.subtotal | number:'1.2-2'
+                                    }}</span>
+                            </td>
+                            <td class="px-3 py-3 text-center">
+                                <button (click)="onEliminarItem(i)"
+                                    class="text-red-400 hover:text-red-600 transition-colors cursor-pointer bg-transparent border-none">
+                                    <i class="pi pi-times text-xs"></i>
+                                </button>
+                            </td>
+                        </tr>
                         }
-                    </div>
-
-                    <hr class="border-gray-200">
-
-                    <div class="flex flex-col gap-2">
-                        <div class="flex justify-between items-center">
-                            <span class="text-xs text-gray-500">Subtotal</span>
-                            <span class="text-xs font-bold text-gray-700">S/ {{ subtotal() | number:'1.2-2' }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xs text-gray-500">Descuento</span>
-                            <div class="flex items-center gap-1">
-                                <span class="text-xs text-gray-400">S/</span>
-                                <input type="number" [value]="descuento()" min="0"
-                                    class="w-16 text-right text-xs font-bold border border-gray-200 rounded-lg px-2 py-1 focus:border-pink-300 outline-none"
-                                    (input)="onDescuento($event)" />
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xs text-gray-500">IGV (18%)</span>
-                            <span class="text-xs font-bold text-gray-700">S/ {{ igv() | number:'1.2-2' }}</span>
-                        </div>
-                    </div>
-
-                    <hr class="border-gray-200">
-
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm font-black text-gray-800">TOTAL</span>
-                        <span class="text-xl font-black text-pink-600">S/ {{ total() | number:'1.2-2' }}</span>
-                    </div>
-
-                    <div class="bg-white rounded-xl border border-gray-100 p-3 flex items-center gap-2">
-                        <i class="pi pi-wallet text-pink-400 text-sm"></i>
-                        <div>
-                            <p class="text-[10px] text-gray-400 uppercase font-bold m-0">Método de pago</p>
-                            <p class="text-xs font-bold text-gray-700 m-0">{{ metodoPago() }}</p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="flex flex-col gap-2">
-                    <button (click)="onGuardar()" [disabled]="loading()"
-                        class="flex items-center justify-center gap-2 w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-3 rounded-xl text-sm font-black transition-all shadow-sm cursor-pointer disabled:opacity-50">
-                        <i [class]="loading() ? 'pi pi-spin pi-spinner' : 'pi pi-check'" class="text-sm"></i>
-                        {{ loading() ? 'Registrando...' : 'Confirmar Venta' }}
-                    </button>
-                    <button (click)="onCerrar()"
-                        class="flex items-center justify-center gap-2 w-full bg-white hover:bg-gray-50 text-gray-600 border border-gray-200 px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer">
-                        Cancelar
-                    </button>
-                </div>
+                        <tr class="border-t border-gray-100">
+                            <td colspan="7">
+                                <div class="flex items-center gap-2 px-3 py-3 text-gray-300">
+                                    <i class="pi pi-plus-circle text-sm"></i>
+                                    <span class="text-xs italic">Busca un producto para agregarlo...</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-
         </div>
+
     </div>
 
-</p-dialog>
+    <!-- COLUMNA DERECHA: resumen sticky -->
+    <div class="flex flex-col gap-4 sticky top-6 h-fit">
+
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col gap-4">
+            <h3 class="text-sm font-bold text-gray-700 flex items-center gap-2 m-0">
+                <i class="pi pi-receipt text-pink-400"></i> Resumen
+            </h3>
+
+            <div class="bg-gray-50 rounded-xl border border-gray-100 p-3">
+                <p class="text-[10px] text-gray-400 uppercase font-bold mb-1">Cliente</p>
+                @if (clienteSeleccionado()) {
+                <p class="text-xs font-bold text-gray-700 m-0">{{ clienteSeleccionado().name }}</p>
+                <p class="text-[10px] text-gray-400 m-0">{{ clienteSeleccionado().documentNumber }}</p>
+                } @else {
+                <p class="text-xs text-gray-300 italic m-0">Venta sin cliente</p>
+                }
+            </div>
+
+            <hr class="border-gray-100">
+
+            <div class="flex flex-col gap-2.5">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-gray-500">Productos</span>
+                    <span class="text-xs font-bold text-gray-700">{{ items().length }} item(s)</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-gray-500">Subtotal</span>
+                    <span class="text-xs font-bold text-gray-700">S/ {{ subtotal() | number:'1.2-2' }}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-gray-500">Descuento</span>
+                    <div class="flex items-center gap-1">
+                        <span class="text-xs text-gray-400">S/</span>
+                        <input type="number" [value]="descuento()" min="0"
+                            class="w-16 text-right text-xs font-bold border border-gray-200 rounded-lg px-2 py-1 focus:border-pink-300 outline-none"
+                            (input)="onDescuento($event)" />
+                    </div>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-gray-500">IGV (18%)</span>
+                    <span class="text-xs font-bold text-gray-700">S/ {{ igv() | number:'1.2-2' }}</span>
+                </div>
+            </div>
+
+            <hr class="border-gray-100">
+
+            <div class="flex justify-between items-center">
+                <span class="text-base font-black text-gray-800">TOTAL</span>
+                <span class="text-2xl font-black text-pink-600">S/ {{ total() | number:'1.2-2' }}</span>
+            </div>
+
+            <div class="bg-gray-50 rounded-xl border border-gray-100 p-3 flex items-center gap-2">
+                <i class="pi pi-wallet text-pink-400 text-sm"></i>
+                <div>
+                    <p class="text-[10px] text-gray-400 uppercase font-bold m-0">Método de pago</p>
+                    <p class="text-xs font-bold text-gray-700 m-0">{{ metodoPago() }}</p>
+                </div>
+            </div>
+
+            <button (click)="onGuardar()" [disabled]="loading() || items().length === 0"
+                class="flex items-center justify-center gap-2 w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-3 rounded-xl text-sm font-black transition-all shadow-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+                <i [class]="loading() ? 'pi pi-spin pi-spinner' : 'pi pi-check'" class="text-sm"></i>
+                {{ loading() ? 'Registrando...' : 'Confirmar Venta' }}
+            </button>
+
+            <button (click)="resetForm()"
+                class="flex items-center justify-center gap-2 w-full bg-white hover:bg-gray-50 text-gray-500 border border-gray-200 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer">
+                <i class="pi pi-refresh text-xs"></i> Limpiar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

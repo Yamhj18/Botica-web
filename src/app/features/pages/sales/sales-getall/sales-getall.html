@@ -7,19 +7,15 @@
 
         <div class="lg:col-span-3">
             <app-sales-table [ventas]="filtrados()" [loading]="loading()" [error]="error()"
-                (verDetalle)="onVerDetalle($event)" (nuevaVenta)="onNuevaVenta()" />
+                (verDetalle)="onVerDetalle($event)" />
         </div>
+
         <app-sales-sidebar [busqueda]="busqueda()" [metodoPagoSeleccionado]="metodoPagoSeleccionado()"
             [estadoSeleccionado]="estadoSeleccionado()" [metodosPago]="metodosPago()"
             (busquedaChange)="onBusqueda($event)" (metodoPagoChange)="onMetodoPagoChange($event)"
-            (estadoChange)="onEstadoChange($event)" (limpiarFiltros)="onLimpiarFiltros()"
-            (nuevaVenta)="onNuevaVenta()" />
-
+            (estadoChange)="onEstadoChange($event)" (limpiarFiltros)="onLimpiarFiltros()" />
 
     </div>
-
-    <app-sales-new [visible]="showNew()" [clientes]="clientes()" [productos]="productos()"
-        (visibleChange)="showNew.set($event)" (guardado)="onVentaGuardada()" />
 
     <app-sales-detail [visible]="showDetail()" [venta]="ventaSeleccionada()" (visibleChange)="showDetail.set($event)" />
 

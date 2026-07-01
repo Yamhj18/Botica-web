@@ -1,8 +1,7 @@
-import { Component, input, output, signal, computed, inject, effect } from '@angular/core';
-import { DialogModule } from 'primeng/dialog';
-import { DecimalPipe } from '@angular/common';
+import { Component, OnInit, signal, computed, inject } from '@angular/core';
 import { Api } from '../../../../api/api';
-import { customerGetall, customerInsert, lotByproduct, saleInsert } from '../../../../api/functions';
+import { customerGetall, customerInsert, lotByproduct, productGetall, saleInsert } from '../../../../api/functions';
+import { DecimalPipe } from '@angular/common';
 
 interface ItemVenta {
   idProduct: string;
@@ -19,22 +18,19 @@ interface ItemVenta {
 
 @Component({
   selector: 'app-sales-new',
-  imports: [DialogModule, DecimalPipe],
+  imports: [DecimalPipe],
   templateUrl: './sales-new.html',
 })
-export class SalesNew {
+export class SalesNew implements OnInit {
   private readonly api = inject(Api);
 
-  visible = input<boolean>(false);
-  clientes = input<any[]>([]);
-  productos = input<any[]>([]);
-
-  visibleChange = output<boolean>();
-  guardado = output<void>();
-
+  clientes = signal<any[]>([]);
+  productos = signal<any[]>([]);
   loading = signal<boolean>(false);
   loadingCliente = signal<boolean>(false);
+  loadingData = signal<boolean>(true);
   error = signal<string>('');
+  successMessage = signal<string>('');
 
   tieneCliente = signal<boolean>(false);
   clienteSeleccionado = signal<any>(null);
@@ -62,10 +58,30 @@ export class SalesNew {
       .slice(0, 8);
   });
 
-  constructor() {
-    effect(() => {
-      if (!this.visible()) this.resetForm();
-    });
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  private async loadData(): Promise<void> {
+    this.loadingData.set(true);
+    await Promise.all([this.loadClientes(), this.loadProductos()]);
+    this.loadingData.set(false);
+  }
+
+  private async loadClientes(): Promise<void> {
+    try {
+      const raw: any = await this.api.invoke$Response(customerGetall);
+      const data = typeof raw.body === 'string' ? JSON.parse(raw.body) : raw.body;
+      if (data.type === 'success') this.clientes.set(data.listCustomers ?? []);
+    } catch { }
+  }
+
+  private async loadProductos(): Promise<void> {
+    try {
+      const raw: any = await this.api.invoke$Response(productGetall);
+      const data = typeof raw.body === 'string' ? JSON.parse(raw.body) : raw.body;
+      if (data.type === 'success') this.productos.set(data.listProducts ?? []);
+    } catch { }
   }
 
   resetForm(): void {
@@ -79,6 +95,7 @@ export class SalesNew {
     this.busquedaProducto.set('');
     this.showProductSearch.set(false);
     this.error.set('');
+    this.successMessage.set('');
   }
 
   onSeleccionarCliente(idCustomer: string): void {
@@ -176,14 +193,9 @@ export class SalesNew {
         this.error.set(data.listMessage[0] ?? 'Error al guardar cliente.');
         return;
       }
-      const rawClientes: any = await this.api.invoke$Response(customerGetall);
-      const dataClientes = typeof rawClientes.body === 'string' ? JSON.parse(rawClientes.body) : rawClientes.body;
-      if (dataClientes.type === 'success') {
-        const nuevo = (dataClientes.listCustomers ?? []).find((c: any) =>
-          c.documentNumber === this.nuevoCliente().documentNumber
-        );
-        if (nuevo) this.clienteSeleccionado.set(nuevo);
-      }
+      await this.loadClientes();
+      const nuevo = this.clientes().find(c => c.documentNumber === this.nuevoCliente().documentNumber);
+      if (nuevo) this.clienteSeleccionado.set(nuevo);
       this.showNuevoCliente.set(false);
       this.nuevoCliente.set({ documentType: 'DNI', documentNumber: '', name: '' });
     } catch {
@@ -195,6 +207,7 @@ export class SalesNew {
 
   async onGuardar(): Promise<void> {
     this.error.set('');
+    this.successMessage.set('');
     if (this.items().length === 0) {
       this.error.set('Agrega al menos un producto.');
       return;
@@ -229,16 +242,13 @@ export class SalesNew {
         this.error.set(data.listMessage[0] ?? 'Error al registrar venta.');
         return;
       }
-      this.guardado.emit();
+      this.successMessage.set(data.listMessage[0] ?? 'Venta registrada correctamente.');
+      this.resetForm();
     } catch {
       this.error.set('Error al registrar venta.');
     } finally {
       this.loading.set(false);
     }
-  }
-
-  onCerrar(): void {
-    this.visibleChange.emit(false);
   }
 
   protected readonly Number = Number;
