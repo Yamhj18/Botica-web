@@ -116,12 +116,7 @@ create table tcustomer (
   documentType varchar(20) not null,    -- DNI, RUC, CE, etc.
   documentNumber varchar(20) not null unique,
   name varchar(120) not null,
-  phone varchar(20),
-  email varchar(100),
-  address varchar(150),
-  status varchar(20) not null,  -- Activo, Inactivo
-  createdAt datetime not null,
-  updatedAt datetime not null
+  createdAt datetime not null
 );
 
 create table tsale(
@@ -260,12 +255,11 @@ INSERT INTO tinventorymovementdetail VALUES
 
 -- 10. tcustomer
 INSERT INTO tcustomer VALUES
-('c0011111-1111-1111-1111-111111111111', 'DNI', '74859632', 'Juan Pérez Gómez', '987654321', 'juan.perez@gmail.com', 'Av. Los Incas 120 - Cusco', 'activo', NOW(), NOW()),
-('c0022222-2222-2222-2222-222222222222', 'DNI', '71589634', 'María López Quispe', '912345678', 'maria.lopez@gmail.com', 'Urb. Magisterio - Cusco', 'activo', NOW(), NOW()),
-('c0033333-3333-3333-3333-333333333333', 'DNI', '73659874', 'Carlos Ramos Flores', '945612378', 'carlos.ramos@gmail.com', 'Wanchaq - Cusco', 'activo', NOW(), NOW()),
-('c0044444-4444-4444-4444-444444444444', 'DNI', '70124589', 'Lucía Herrera Soto', '978451236', 'lucia.herrera@gmail.com', 'San Sebastián - Cusco', 'activo', NOW(), NOW()),
-('c0055555-5555-5555-5555-555555555555', 'RUC', '20601234567', 'Empresa Salud SAC', '084223344', 'compras@salud.com', 'Av. El Sol 456 - Cusco', 'activo', NOW(), NOW());
-
+('c0011111-1111-1111-1111-111111111111', 'DNI', '74859632', 'Juan Pérez Gómez', NOW()),
+('c0022222-2222-2222-2222-222222222222', 'DNI', '71589634', 'María López Quispe', NOW()),
+('c0033333-3333-3333-3333-333333333333', 'DNI', '73659874', 'Carlos Ramos Flores', NOW()),
+('c0044444-4444-4444-4444-444444444444', 'DNI', '70124589', 'Lucía Herrera Soto', NOW()),
+('c0055555-5555-5555-5555-555555555555', 'RUC', '20601234567', 'Empresa Salud SAC', NOW());
 
 -- 11. tsale
 INSERT INTO tsale VALUES
