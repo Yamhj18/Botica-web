@@ -10,4 +10,7 @@ import com.epiis.apirfbvc.entity.EntityInventoryMovementDetail;
 @Repository
 public interface RepositoryInventoryMovementDetail extends JpaRepository<EntityInventoryMovementDetail, String> {
 	List<EntityInventoryMovementDetail> findByMovement_IdMovement(String idMovement);
+	
+    List<EntityInventoryMovementDetail> findByProduct_IdProduct(String idProduct);
+
 }

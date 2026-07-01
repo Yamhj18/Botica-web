@@ -13,6 +13,7 @@ import com.epiis.apirfbvc.business.BusinessProduct;
 import com.epiis.apirfbvc.dto.request.RequestProductInsert;
 import com.epiis.apirfbvc.dto.response.ResponseProductGetAll;
 import com.epiis.apirfbvc.dto.response.ResponseProductInsert;
+import com.epiis.apirfbvc.dto.response.ResponseProductStockAlert;
 
 import jakarta.validation.Valid;
 
@@ -53,5 +54,10 @@ public class ProductController {
 	@GetMapping(path = "getall")
     public ResponseEntity<ResponseProductGetAll> listProduct() {
         return ResponseEntity.ok(businessProduct.getAll());
+    }
+	
+	@GetMapping(path = "stock-alert")
+    public ResponseEntity<ResponseProductStockAlert> getStockAlert() {
+        return ResponseEntity.ok(businessProduct.getStockAlert());
     }
 }

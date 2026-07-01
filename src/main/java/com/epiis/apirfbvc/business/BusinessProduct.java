@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.epiis.apirfbvc.dto.request.RequestProductInsert;
 import com.epiis.apirfbvc.dto.response.ResponseProductGetAll;
 import com.epiis.apirfbvc.dto.response.ResponseProductInsert;
+import com.epiis.apirfbvc.dto.response.ResponseProductStockAlert;
 import com.epiis.apirfbvc.entity.EntityCategory;
 import com.epiis.apirfbvc.entity.EntityLaboratory;
 import com.epiis.apirfbvc.entity.EntityLot;
@@ -122,6 +123,32 @@ public class BusinessProduct {
         data.put("createdAt", p.getCreatedAt().toString());
         
         return data;
+    }
+    
+    public ResponseProductStockAlert getStockAlert() {
+        ResponseProductStockAlert response = new ResponseProductStockAlert();
+
+        List<EntityProduct> productos = repositoryProduct.findAll();
+
+        int stockCritico = 0;
+        for (EntityProduct p : productos) {
+            int totalStock = repositoryLot.findByProduct_IdProduct(p.getIdProduct())
+                .stream()
+                .mapToInt(EntityLot::getCurrentStock)
+                .sum();
+            if (totalStock <= p.getStockMinimum()) {
+                stockCritico++;
+            }
+        }
+
+        LocalDate hoy = LocalDate.now();
+        LocalDate limite = hoy.plusDays(30);
+        long porVencer = repositoryLot.findByExpirationDateBetween(hoy, limite).size();
+
+        response.setStockCritico(stockCritico);
+        response.setPorVencer30Dias(porVencer);
+        response.success();
+        return response;
     }
     
 }

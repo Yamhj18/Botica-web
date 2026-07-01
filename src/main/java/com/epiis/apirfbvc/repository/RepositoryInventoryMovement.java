@@ -10,4 +10,6 @@ import com.epiis.apirfbvc.entity.EntityInventoryMovement;
 @Repository
 public interface RepositoryInventoryMovement extends JpaRepository<EntityInventoryMovement, String> {
 	List<EntityInventoryMovement> findByType(String type);
+	List<EntityInventoryMovement> findByTypeOrderByMovementDateDesc(String type);
+	List<EntityInventoryMovement> findByUser_IdUser(String idUser);
 }
