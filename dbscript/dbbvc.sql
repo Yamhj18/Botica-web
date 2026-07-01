@@ -129,8 +129,8 @@ igv decimal(10,2) not null,
 total decimal(10,2) not null,
 paymentMethod varchar(30) not null,
 status varchar(20) not null, -- Completada, Anulada
-idUser char(36) not null,
-idCustomer char(36) not null,
+idUser char(36) null,
+idCustomer char(36) null,
 createdAt datetime not null,
 updatedAt datetime not null, 
 
