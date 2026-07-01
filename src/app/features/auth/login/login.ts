@@ -66,7 +66,7 @@ export class Login {
 
       const routes: Record<string, string> = {
         'administrador': '/admin',
-        'vendedor': '/sales',
+        'vendedor': '/seller',
         'quimico': '/quimico',
       };
 
